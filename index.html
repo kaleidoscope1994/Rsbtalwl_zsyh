@@ -1,0 +1,604 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>金葵花申请提交</title>
+    <meta name="referrer" content="never"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <style type="text/css">
+      body{
+        background-color: #eaeaea;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        box-sizing: border-box;
+        padding: 0;
+      }
+      #mytxt{
+        outline: none;
+        border-radius: 8px;
+        background-color: #fdfdfe;
+        font-size: 17px;
+        width: 100%;
+        box-sizing: border-box;
+        height: 176px;
+        margin-bottom: 10px;
+        border: 0;
+        resize: none;
+        padding: 10px;
+        /*margin-top: 40px;*/
+      }
+      .lr{
+        display: flex;
+      }
+      #btn1{
+        width: 80px;
+        background-color: #ed7864;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 4px;
+        height: 48px;
+        margin-right: 10px;
+        line-height: 48px;
+      }
+      #btn2{
+        flex: 1;
+        background-color: #3aa5de;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 4px;
+        height: 48px;
+        line-height: 48px;
+      }
+      .wrapper{
+        padding: 10px;
+      }
+      #tip{
+        display: none;
+        padding: 10px;
+        background-color: rgba(0,0,0,0.6);
+        color: #c3c3c3;;
+        border-radius: 4px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+      }
+      .item{
+        background-color: #fff;
+        /* line-height: 40px; */
+        box-sizing: border-box;
+        
+        margin-bottom: 4px;
+        overflow: hidden;
+      }
+      .face{
+        box-sizing: border-box;
+        margin: 10px;
+        color: #666;
+        background-color: #fff;
+      }
+      .face span{
+        margin-right: 10px;
+        background-color: #fff;
+      }
+      .detail{
+        border-top: 1px solid #eee;
+        background-color: #fff;
+        padding-left: 10px;
+        padding-right: 10px;
+        line-height: 28px;
+        color: #5b89ce;
+        margin: 0;
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+      .detail p{
+        margin: 0;
+        word-break: break-all;
+      }
+      .face .name{
+        color: #5b89ce;
+      }
+      .toolbar{
+        text-align: center;
+        padding-top: 12px;
+        padding-bottom: 8px;
+        color: #9295ab;
+      }
+      .toolbar span{
+        margin-left: 15px;
+        margin-right: 15px;
+      }
+      .tags{
+        margin-bottom: 10px;
+      }
+      .tags .normal{
+        height: 36px;
+        background-color: #cacaca;/*#fdb96b;*/
+        display: inline-block;
+        text-align: center;
+        line-height: 36px;
+        color: #fff;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .tags .highlight{
+        background-color: #fdb96b;
+      }
+      #btn3{
+        width: 80px;
+        background-color: #444444;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 4px;
+        height: 48px;
+        margin-right: 10px;
+        line-height: 48px;
+      }
+      #btn4{
+        flex: 1;
+        background-color: #a1cc1f;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 4px;
+        height: 48px;
+        line-height: 48px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="toolbar">
+      <span id="btn_sq">申请页</span>
+      <span id="btn_zl">总览页</span>
+    </div>
+
+    <div class="page-apply">
+      <div class="wrapper">
+        <textarea id="mytxt"></textarea>
+        <div class="lr" id="ed" style="display: none;">
+          <div id="btn3">删除</div>
+          <div id="btn4">确认修改</div>
+        </div>
+        <div class="lr" id="cr">
+          <div id="btn1">上传</div>
+          <div id="btn2">本地保存</div>
+        </div>
+        <div class="tags" style="margin-top: 58px;" data-tag="达标,未达标">
+          <span class="normal">达标</span>
+          <span class="normal">未达标</span>
+        </div>
+        <div class="tags" data-tag="网点领卡,邮寄领卡">
+          <span class="normal">网点领卡</span>
+          <span class="normal">邮寄领卡</span>
+        </div>
+        <div class="tags" data-tag="待申请,待领卡,已领卡,已激活">
+          <span class="normal">待申请</span>
+          <span class="normal">待领卡</span>
+          <span class="normal">已领卡</span>
+          <span class="normal">已激活</span>
+          <!-- <span class="normal">促达标</span> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="page-total" style="display: none;">
+      <div class="wrapper" id="list">
+        
+        <!-- <div class="item">
+          <div class="face">
+            <span>20.3.15</span>
+            <span class="name">朱润波</span>
+            <span>达标</span>
+            <span>邮寄</span>
+            <span>已领卡</span>
+          </div>
+          <div class="detail" style="display: none;">
+            <p>手机：13537809521</p>
+            <p>旧卡：6214 8580 2912 4123</p>
+            <p>新卡：6214 8680 2912 4123</p>
+            <p>备注：hi奥神队阿斯钢gaudy海都i啊U树搞丢啊哈岁的胡爱速度爱USD高i阿甘嗲三点半爱与施工i亚公司的议案四uhdiusdgyigai爱国阿斯钢丢啊规划地柜艾素哎</p>
+          </div>
+        </div> -->
+
+
+      </div>
+    </div>
+
+    <div id="tip">已保存</div>
+    <script type="text/javascript">
+      //首次打开判断是否有未完成的内容
+      if(localStorage.content){
+        $('#mytxt').val(localStorage.getItem("content"));
+      }
+
+
+      //tip函数
+      function Xtip(str){
+        $('#tip').val(str);
+        $('#tip').stop().show(0).delay(1000).hide(0); 
+      }
+
+
+      //卡号化
+      function CardType(str){
+        return str.replace(/[\s]/g, '').replace(/(\d{4})(?=\d)/g, "$1 ");
+      }
+
+
+      //点击保存按钮
+      $('#btn2').click(function(){
+        localStorage.setItem("content",$('#mytxt').val());
+        Xtip('已保存');
+      });
+
+
+      //刷新页面
+      function loadContent(){
+        $('#list').empty();
+        $.get('/load',function(data){
+              //渲染条数
+              console.log('SSSSAAA',data);
+              for(var i =0;i<data.length;i++){
+                console.log(data[i].ctime);
+                $('#list').prepend('<div class="item"><div class="face"><span>'+data[i].ctime+'</span><span class="name">'+data[i].cname+'</span><span class="expl">'+data[i].cstand+'</span><span class="expl">'+data[i].cgetway+'</span><span class="expl">'+data[i].cstate+'</span></div><div class="detail" data-id="'+data[i].cid+'" style="display: none;"><p>手机：'+data[i].cphone+'</p><p>旧卡：'+CardType(data[i].coldcard)+'</p><p>新卡：'+CardType(data[i].cnewcard)+'</p><p>备注：'+data[i].ctxt.replace(/\n/g,";")+'</p></div></div>');
+              }
+
+              //触摸控制
+              var i = 0;    
+              $('.detail').unbind().bind('click',function () {        
+                i++;
+                setTimeout(function () {i = 0}, 300);  
+                if (i > 1) {
+                  i = 0;
+                  //alert('这是双击'); 
+                  //开始进入编辑
+                  gotoEdit($(this).data('id'),$(this).find('p:last').html().replace("备注：","").replace(/;/g,"\n"));
+                }
+              });
+
+              //颜色渲染
+              //状态颜色转换
+              $('.expl').each(function(){
+                switch($(this).html()){
+                  case "达标":
+                    $(this).css('color','#ea0af9')
+                    break;
+                  case "待申请":
+                    $(this).css('color','#ff1919')
+                    break;
+                  case "待领卡":
+                    $(this).css('color','#ff8d00')
+                    break;
+                  case "已领卡":
+                    $(this).css('color','#3573ff')
+                    break;
+                  case "已激活":
+                    $(this).css('color','#54cc4c')
+                    break;
+                  default:
+                }
+              });
+
+
+
+
+              //设置统计页
+              $('.name').unbind().bind('click',function(){
+                $(this).parents('.item').find('.detail').toggle();
+              });
+              //显示统计页
+              $('.page-apply').hide();
+              $('.page-total').show();
+            });
+      }
+
+
+      //前往编辑
+      var now_edit = '';
+      function gotoEdit(myid,con){
+        now_edit = myid;
+        $('#mytxt').val(con);
+        $('.page-total').hide();
+        $('#cr').hide();
+        $('#ed').show();
+        $('.page-apply').show();
+        $('.page-apply .editbar').show();
+        showHightlight();
+      }
+
+
+
+      //点击上传按钮
+      $('#btn1').click(function(){
+        //获取时间
+        var date = new Date();
+        var tyear = String(date.getFullYear()).substr(2,2);
+        var tmonth = String(date.getMonth()+1);
+        var tdate = date.getDate();
+        var smipletime = tyear+'.'+tmonth+'.'+tdate;
+
+
+
+
+        //开始处理内容
+        //分析文本
+        var ctxt = $('#mytxt').val();
+        
+        var reg_name = /((^|\s)[\u4e00-\u9fa5·]{2,12}($|\s)|(^|\s)[A-Za-z\s]{4,24}($|\s))/;
+        var reg_phone = /(^|\s)1(3|4|5|7|8)\d{9}($|\s)/;
+        var reg_newcard = /621486\d{10}/;
+        var reg_oldcard = /(^|\s)(?!621486|1)\d{9,16}($|\s)/;
+
+        var errtxt = '';
+
+        try{
+          var cname = reg_name.exec(ctxt)[0].replace(/(^\s+|\s+$)/g,"");//获取名字
+          console.log('姓名：',cname);
+        }catch(err){
+          var cname = '未知';
+          errtxt = '未检测到姓名';
+        }
+        try{
+          var cphone = reg_phone.exec(ctxt)[0].replace(/(^\s+|\s+$)/g,"");//获取手机
+          console.log('电话：',cphone);
+        }catch(err){
+          var cphone = '未知';
+          errtxt = '未检测到手机号';
+        }
+        try{
+          var coldcard = reg_oldcard.exec(ctxt)[0].replace(/(^\s+|\s+$)/g,"");//获取旧卡号
+          console.log('旧卡：',coldcard);
+        }catch(err){
+          var coldcard = '未知';
+          errtxt = '未检测到旧卡号';
+        }
+        try{
+          var cnewcard = reg_newcard.exec(ctxt)[0];
+          console.log('新卡：',cnewcard);
+        }catch(err){
+          var cnewcard = '未知';
+          errtxt = '未检测到新卡号';
+        }
+
+
+        var dabiao ='';
+        if(ctxt.indexOf('(达标)')!=-1) dabiao = '达标';
+        if(ctxt.indexOf('(未达标)')!=-1) dabiao = '未达标';
+
+        var lingka ='';
+        if(ctxt.indexOf('(网点领卡)')!=-1) lingka = '网点领卡';
+        if(ctxt.indexOf('(邮寄领卡)')!=-1) lingka = '邮寄领卡';
+
+        var jindu ='';
+        if(ctxt.indexOf('(待申请)')!=-1) jindu = '待申请';
+        if(ctxt.indexOf('(待领卡)')!=-1) jindu = '待领卡';
+        if(ctxt.indexOf('(已领卡)')!=-1) jindu = '已领卡';
+        if(ctxt.indexOf('(已激活)')!=-1) jindu = '已激活';
+
+
+
+
+
+
+        if(errtxt){
+          if(!confirm(errtxt+',是否继续上传？')){
+            return;
+          }
+        }
+
+
+        //开始上传内容
+        $.post('/new',{
+          ctime:smipletime,
+          cname:cname,
+          cphone:cphone,
+          coldcard:coldcard,
+          cnewcard:cnewcard,
+          ctxt:ctxt,
+          cstand:dabiao,
+          cgetway:lingka,
+          cstate:jindu
+        },function(data){
+          //console.log('FFFF');
+          if(data.suc==1){
+            //alert('上传成功');
+            localStorage.setItem("content",'');
+            $('#mytxt').val('');
+            //console.log('FFFFX');
+            loadContent();
+            $('.tags span').removeClass('highlight');
+          }
+        });
+
+
+
+
+        //....
+        /*
+        $.post('/new',{
+          ctime:'a'
+        },function(data){
+
+        });
+        */
+      });
+
+
+      $('#btn_sq').click(function(){
+        $('.page-total').hide();
+        $('#ed').hide();
+        $('#cr').show();
+        $('.page-apply').show();
+        $('#mytxt').val(localStorage.getItem("content"));
+        $('.page-apply .editbar').hide();
+      });
+
+      $('#btn_zl').click(function(){
+        loadContent();
+        $('.page-apply').hide();
+        $('.page-total').show();
+      });
+
+      //标签添加
+      $('.tags span').click(function(){
+        $('#mytxt').val($('#mytxt').val()+'('+$(this).html()+')');
+      });
+
+
+      //(未达标)
+      //标签替换
+      $('.tags span').click(function(){
+        var arr = $(this).parents('.tags').data('tag').split(',');
+        var this_val = $(this).html();
+        var txt = $('#mytxt').val();
+        for(var i=0;i<arr.length;i++){txt = txt.replace(new RegExp('\\('+arr[i]+'\\)','g'),'')}
+        $('#mytxt').val(txt+'('+this_val+')');
+        //清楚所有按钮样式
+        $(this).parents('.tags').find('span').removeClass('highlight');
+        //高亮按钮
+        $(this).addClass('highlight');
+      });
+     
+      // $('.detail').dblclick(function(){
+      //   alert('正在进行编辑');
+      // });
+
+      
+      //修改
+      $('#btn4').click(function(){
+        //$.post('/ch',{myid:now_edit,mycon:})
+        //开始处理内容
+        //分析文本
+        var ctxt = $('#mytxt').val();
+        
+        var reg_name = /((^|\s)[\u4e00-\u9fa5·]{2,12}($|\s)|(^|\s)[A-Za-z\s]{4,24}($|\s))/;
+        var reg_phone = /(^|\s)1(3|4|5|7|8)\d{9}($|\s)/;
+        var reg_newcard = /621486\d{10}/;
+        var reg_oldcard = /(^|\s)(?!621486|1)\d{9,16}($|\s)/;
+
+        var errtxt = '';
+
+        try{
+          var cname = reg_name.exec(ctxt)[0].replace(/(^\s+|\s+$)/g,"");//获取名字
+          console.log('姓名：',cname);
+        }catch(err){
+          var cname = '未知';
+          errtxt = '未检测到姓名';
+        }
+        try{
+          var cphone = reg_phone.exec(ctxt)[0].replace(/(^\s+|\s+$)/g,"");//获取手机
+          console.log('电话：',cphone);
+        }catch(err){
+          var cphone = '未知';
+          errtxt = '未检测到手机号';
+        }
+        try{
+          var coldcard = reg_oldcard.exec(ctxt)[0].replace(/(^\s+|\s+$)/g,"");//获取旧卡号
+          console.log('旧卡：',coldcard);
+        }catch(err){
+          var coldcard = '未知';
+          errtxt = '未检测到旧卡号';
+        }
+        try{
+          var cnewcard = reg_newcard.exec(ctxt)[0];
+          console.log('新卡：',cnewcard);
+        }catch(err){
+          var cnewcard = '未知';
+          errtxt = '未检测到新卡号';
+        }
+
+
+        var dabiao ='';
+        if(ctxt.indexOf('(达标)')!=-1) dabiao = '达标';
+        if(ctxt.indexOf('(未达标)')!=-1) dabiao = '未达标';
+
+        var lingka ='';
+        if(ctxt.indexOf('(网点领卡)')!=-1) lingka = '网点领卡';
+        if(ctxt.indexOf('(邮寄领卡)')!=-1) lingka = '邮寄领卡';
+
+        var jindu ='';
+        if(ctxt.indexOf('(待申请)')!=-1) jindu = '待申请';
+        if(ctxt.indexOf('(待领卡)')!=-1) jindu = '待领卡';
+        if(ctxt.indexOf('(已领卡)')!=-1) jindu = '已领卡';
+        if(ctxt.indexOf('(已激活)')!=-1) jindu = '已激活';
+
+
+
+
+
+
+        if(errtxt){
+          if(!confirm(errtxt+',是否继续上传？')){
+            return;
+          }
+        }
+
+
+        //开始上传内容
+        $.post('/ch',{
+          /*ctime:smipletime,*/
+          cid:now_edit,
+          cname:cname,
+          cphone:cphone,
+          coldcard:coldcard,
+          cnewcard:cnewcard,
+          ctxt:ctxt,
+          cstand:dabiao,
+          cgetway:lingka,
+          cstate:jindu
+        },function(data){
+          //console.log('FFFF');
+          if(data.suc==1){
+            //alert('上传成功');
+            localStorage.setItem("content",'');
+            $('#mytxt').val('');
+            //console.log('FFFFX');
+            loadContent();
+            $('.tags span').removeClass('highlight');
+          }
+        });
+      });
+
+
+
+      $('#btn3').click(function(){
+        if(confirm('确定删除这条金葵花数据吗？')){
+          $.post('/del',{
+            cid:now_edit
+          },function(data){
+            if(data.suc==1){
+              //alert('上传成功');
+              localStorage.setItem("content",'');
+              $('#mytxt').val('');
+              //console.log('FFFFX');
+              loadContent();
+              $('.tags span').removeClass('highlight');
+            }
+          });
+        }
+      });
+
+
+      //执行高亮检测
+      function showHightlight(){
+        var txt = $('#mytxt').val();
+        $('.tags span').each(function(){
+            if(txt.indexOf('('+$(this).html()+')')!=-1){
+              $(this).addClass('highlight');
+            }
+        });
+      }
+
+
+
+
+    </script>
+  </body>
+</html>
